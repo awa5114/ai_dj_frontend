@@ -1,0 +1,12 @@
+ai-dj.json
+ai_dj.egg-info/
+*.mp3
+*.wav
+raw_data/
+*pretrained_models/
+*checkpoint.ipynb
+*.pyc
+*.csv
+**/__pycache__/
+.python-version
+.vscode/

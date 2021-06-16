@@ -1,0 +1,15 @@
+# packaging
+pip
+setuptools
+
+twine
+wheel
+
+# API
+fastapi
+uvicorn
+google-cloud-storage
+
+# interface
+soundfile
+numpy
