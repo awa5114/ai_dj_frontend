@@ -1,15 +1,11 @@
 # packaging
 pip
 setuptools
-
 twine
 wheel
 
-# API
-fastapi
-uvicorn
-google-cloud-storage
+# front end 
+streamlit
 
-# interface
-soundfile
-numpy
+
+
