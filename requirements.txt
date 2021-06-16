@@ -6,6 +6,6 @@ wheel
 
 # front end 
 streamlit
-
+requests
 
 
