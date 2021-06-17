@@ -2,7 +2,8 @@ from os import write
 import streamlit as st
 import numpy as np
 import pandas as pd
-from ai_dj import params, gcp_storage 
+import params
+import gcp_storage
 
 #Don't forget to change the name.
 file = '64_kygo_combined2.wav'
@@ -51,3 +52,18 @@ if st.button('Yuk, I hate it...'):
     st.write('Thanks for your feedback, the next one will be better.')
 else:
     st.write("You didn't tell us your thoughts yet 😞")
+    
+def get_slider_data():
+    print('get_slider_data called')
+    return pd.DataFrame({
+    'first column': list(range(1, 11)),
+    'second column': np.arange(10, 101, 10)
+        })
+
+df = get_slider_data()
+
+option = st.slider('Select a modulus', 1, 10, 3)
+
+filtered_df = df[df['first column'] % option == 0]
+
+st.write(filtered_df)
