@@ -5,6 +5,7 @@ twine
 wheel
 
 # front end 
+numpy
 streamlit
 requests
 

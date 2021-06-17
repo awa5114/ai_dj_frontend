@@ -1,38 +1,40 @@
 from os import write
 import streamlit as st
+import requests
 import numpy as np
-import pandas as pd
-from ai_dj import params, gcp_storage 
 
-#Don't forget to change the name.
-file = '64_kygo_combined2.wav'
-gcp_storage.get_mixed_audio(file)
-mix = f'{params.TEMP_MIXED_FOLDER}/{file}'
+api_url = "https://ai-dj-container-btoorogyaa-ez.a.run.app"
 
 _, col2, _ = st.beta_columns([1, 2, 1])
 
 with col2:
     st.title("DJ for dummies")
-#st.markdown("""# DJ for dummies""")
-  
-st.markdown("""## Paste the Youtube link of your song below""")
-yt_link = st.text_input('', '' )
+
+st.markdown("""## Song filename """)
+song_name = st.text_input('song filename', '' )
+#1019315 Guido Sava - Fever (Original Mix).wav
+start = st.text_input('start', '')
+stop = st.text_input('stop', '')
+params = {
+    'filename': song_name, 
+    'start':start,
+    'stop':stop,
+}
 
 if st.button('Create'):
     print('button clicked!')
-    st.write('Creating your unique song 🎉')
-    file = '64_kygo_combined2.wav'
-    gcp_storage.get_mixed_audio(file)
-    mix = f'{params.TEMP_MIXED_FOLDER}/{file}'
+    st.write('Creating ydour unique song 🎉')
     st.balloons()
+    response = requests.get(api_url, params=params)
+    json = response.json()
+    audio = json['data']
+    print(type(audio))
+    print(type(audio[0]))
+    st.audio(np.array([audio,audio]))
 else:
     st.write('Nothing created so far 😞')
 
-st.audio(mix, format='audio/wav', start_time=0)
 
-audio_file = open(mix, 'rb')
-audio_bytes = audio_file.read()
-#st.audio(audio_bytes, format='audio/wav')
 st.write("###")
 
 st.markdown("""### Enjoy the newly created song by ai_dj and tell us what you think about it!""")
