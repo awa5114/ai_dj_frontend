@@ -95,3 +95,21 @@ create_bucket:
 
 upload_data:
 	@gsutil cp ${LOCAL_PATH} gs://${BUCKET_NAME}/${BUCKET_FOLDER}/${BUCKET_FILE_NAME}
+
+
+# ----------------------------------
+#         HEROKU COMMANDS
+# ----------------------------------
+
+streamlit:
+	@streamlit run app.py
+
+heroku_login:
+	@heroku login
+
+heroku_create_app:
+	@heroku create ${APP_NAME}
+
+deploy_heroku:
+	@git push heroku master
+	@heroku ps:scale web=1

@@ -21,14 +21,20 @@ params = {
 if st.button('Create'):
     print('button clicked!')
     st.write('Creating ydour unique song 🎉')
-    response = requests.get(url, params=params, stream=True)
-    bts = response.raw.read()
-    st.audio(bts)
+    # response = requests.get(url, params=params, stream=True)
+    # bts = response.raw.read()
+    # st.audio(bts)
+    audio_file = open('ODESZA - A Moment Apart-0 - ODESZA - A Moment Apart-0.wav', 'rb')
+    audio_bytes = audio_file.read()
+    print(type(audio_bytes))
+    st.audio(audio_bytes, format='audio/wav')
+    
 else:
     st.write('Nothing created so far 😞')
 
 
 st.write("###")
+
 
 st.markdown("""### Enjoy the newly created song by ai_dj and tell us what you think about it!""")
 
