@@ -1,7 +1,4 @@
-from librosa.core import audio
 import pandas as pd
-from ai_dj import params
-from ai_dj import gcp_storage
 
 def create_camelot_wheel():
     camelot_wheel = pd.DataFrame()

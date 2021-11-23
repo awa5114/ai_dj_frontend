@@ -1,7 +1,5 @@
 from ai_dj import gcp_storage
-from os import path
 from pydub import AudioSegment
-from pydub.playback import play
 from ai_dj.params import DOWNLOADED_FOLDER, TEMP_DATA_FOLDER
 
 def convert_mp3_to_wav(file):

@@ -1,4 +1,3 @@
-from librosa.core import convert
 from ai_dj.download_youtube import YoutubeDownloader
 import numpy as np
 import pandas as pd
@@ -10,8 +9,6 @@ from pyACA.ToolPreprocAudio import ToolPreprocAudio
 from pyACA.ToolReadAudio import ToolReadAudio
 from ai_dj.params import DOWNLOADED_FOLDER
 from ai_dj import convert_mp3
-from os import path
-from ai_dj import gcp_storage
 from ai_dj import params
 
 class AudioFeatureExtracter:
@@ -24,10 +21,9 @@ class AudioFeatureExtracter:
 
         # Run the default beat tracker
         tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
-        #print('Estimated tempo: {:.2f} beats per minute'.format(tempo))
 
         # Convert the frame indices of beat events into timestamps
-        beat_times = librosa.frames_to_time(beat_frames, sr=sr)
+        # beat_times = librosa.frames_to_time(beat_frames, sr=sr)
         return tempo, y, sr
 
     def computeKey(self, afAudioData, f_s, afWindow=None, iBlockLength=4096, iHopLength=2048):
@@ -125,7 +121,6 @@ class AudioFeatureExtracter:
         youtubedl.download_song()
         title, song_id, output_file, yt_link = youtubedl.download_metadata()
         file_path = f'{DOWNLOADED_FOLDER}/{output_file}'
-        #audio_feature_extracter = AudioFeatureExtracter(f'{DOWNLOADED_FOLDER}/{output_filename}')
         tempo, y, sr = self.get_BPM(file_path)
         key = self.computeKeyCl(file_path)
         max_freq, min_freq, freq_diff = self.min_max_freq(y, sr)
@@ -174,17 +169,6 @@ class AudioFeatureExtracter:
         # csv_df = self.df
         csv_df.to_csv(f'{params.DATA_FOLDER}/{params.AUDIO_FEATURES_FILE}')
         return output_file
-        
-## Test ##
-# yt_link = "https://www.youtube.com/watch?v=L-2CyO8pc0E"
-# #file_name = '056247.mp3'
-# #file = f'{RAW_DATA_FOLDER}/{file_name}'
-# extracter = AudioFeatureExtracter()
-# #extracter.mp3_audio_features(file)
-# extracter.youtube_audio_features(yt_link)
-# extracter.write_to_csv()
-# extracter.upload_csv_to_gcp()
-## Test ##
 
 def get_BPM(y, sr):
     bpm, beat_frames = librosa.beat.beat_track(y=y, sr=sr)

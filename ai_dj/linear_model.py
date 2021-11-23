@@ -9,7 +9,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 import io
 from tensorflow.python.lib.io import file_io
-from sklearn.model_selection import cross_val_score
 import pickle
 
 def load_rated_mixes():
