@@ -1,9 +1,10 @@
 # packaging
 Cython
-pip
-setuptools
+pip>=9
+setuptools>=26
 twine
-wheel
+wheel>=0.29
+
 
 # front end 
 numpy
