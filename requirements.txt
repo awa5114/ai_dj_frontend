@@ -1,5 +1,4 @@
 # packaging
-Cython
 pip>=9
 setuptools>=26
 twine
@@ -16,7 +15,7 @@ soundfile
 # Model
 youtube_dl
 librosa
-madmom
+git+https://github.com/CPJKU/madmom
 spleeter
 pyACA
 scipy
