@@ -2,8 +2,6 @@ import streamlit as st
 import numpy as np
 from ai_dj.trainer import clean_local_folders, get_audio_features_db, extract_wav_from_yt_link, update_new_audio_features, get_audio_features, mix_tracks, update_model_with_rating
 from ai_dj import params, gcp_storage
-import time
-import random
 import os
 import shutil
 from tensorflow.python.lib.io import file_io
@@ -97,7 +95,6 @@ if st.button('Create my mix!'):
         os.mkdir(f'{params.MIXED_AUDIO_FOLDER}/')
     
     write(f"{params.MIXED_AUDIO_FOLDER}{mixed_name}.wav", sr, final_mix)
-    # gcp_storage.upload_mixed_audio(f'{mixed_name}.wav')
     mix_file = f'{params.MIXED_FOLDER}/{mixed_name}.wav'
     mix_rating_df = mix_tracks_rating_df.drop(columns=["mix"])
     print(mix_rating_df.head())

@@ -8,5 +8,15 @@ wheel
 numpy
 streamlit
 requests
+google-cloud-storage
+soundfile
 
-
+# Model
+youtube_dl
+librosa
+madmom
+spleeter
+pyACA
+scipy
+sklearn
+pydub
