@@ -1,4 +1,5 @@
 # packaging
+Cython
 pip
 setuptools
 twine
