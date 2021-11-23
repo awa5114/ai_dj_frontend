@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 from ai_dj.trainer import clean_local_folders, get_audio_features_db, extract_wav_from_yt_link, update_new_audio_features, get_audio_features, mix_tracks, update_model_with_rating
-from ai_dj import params, gcp_storage
+from ai_dj import params
 import os
 import shutil
 from tensorflow.python.lib.io import file_io
@@ -46,16 +46,13 @@ if st.button('Create my mix!'):
                       "audio_features_file": f'gs://ai_dj_batch627_data/data/audio_features/{title}.npy'
                       }
         audio_feature_track_names = audio_feature_track_names.append(track_info, ignore_index=True)
-        # print(audio_feature_track_names["youtube_link"])
         np.save(
          file_io.FileIO(
              f'gs://ai_dj_batch627_data/data/audio_features/audio_features_track_names.csv',
              'w'), audio_feature_track_names)
         name = title
     else:
-        print(audio_feature_track_names.head())
         name = audio_feature_track_names[audio_feature_track_names["youtube_link"] == f'{youtube_link}-{start}']["name"].values[0]
-        print(name)
         latest_iteration.text("Extracting audio features from user song..")
         bar.progress(35)
         new_song = get_audio_features(name)
@@ -69,7 +66,6 @@ if st.button('Create my mix!'):
             # other_name = name
             # while other_name == name:
             other_name = audio_feature_track_names.sample(1)["name"].values[0]
-            print(other_name)
             other_song = get_audio_features(other_name)
             # audio_files = [name, other_song]
             mixed_song, mix_tracks_rating_df = mix_tracks(new_song, other_song)
@@ -84,10 +80,8 @@ if st.button('Create my mix!'):
             break
     latest_iteration.text("Creating mix..")
     bar.progress(80)
-    # final_mix = mixed_song
     final_mix = np.array(mixed_song)
     # export a mix to a wav file
-    # final_mix = np.array(final_mix)
     sr = 44100
     mixed_name = f"{name} - {other_name}"
     if os.path.isdir(f'{params.MIXED_AUDIO_FOLDER}'):
@@ -106,11 +100,11 @@ if st.button('Create my mix!'):
     audio_bytes = audio_file.read()
     bar.progress(100)
     latest_iteration.text("Done!")
+    st.write(f"Your song was mixed with {other_name}:")
     st.audio(audio_bytes, format='audio/wav')
     
 else:
     st.write('Nothing created so far 😞')
-
 
 st.write("###")
 
@@ -118,8 +112,6 @@ st.write("###")
 st.markdown("""### Enjoy the newly created mix by ai_dj!""")
 
 rating = st.slider("Please give a rating to the track!", 1, 10, 5)
-print(mix_rating_df.head())
 
 if st.button("Submit my rating"):
     st.write("Thank you for your feedback, we'll use it to keep improving")
-    # update_model_with_rating(rating, mix_rating_df)

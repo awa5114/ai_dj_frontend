@@ -1,12 +1,9 @@
 import pandas as pd
 import numpy as np
-from ai_dj import audio_features
 from ai_dj.neighbour_songs import create_camelot_wheel
 from ai_dj.audio_features import AudioFeatureExtracter
-from ai_dj import params
 import librosa
 import random
-from tensorflow.python.lib.io import file_io
 
 
 def load_audio_features():

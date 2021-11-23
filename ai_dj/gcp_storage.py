@@ -90,10 +90,3 @@ def get_mixed_audio(file):
     blob = bucket.blob(source_blob_name)
     destination_file_name = f'{params.TEMP_MIXED_FOLDER}/{file}'
     blob.download_to_filename(destination_file_name)
-  
-## TEST ##
-#file = "Kygo, Sasha Sloan - I'll Wait (Lyric Video)-ogv284C4W30.wav"
-# file = "64_kygo_combined2.wav"
-# #folder = "Kygo, Sasha Sloan - I'll Wait (Lyric Video)-ogv284C4W30"
-# get_mixed_audio(file)
-## TEST ##
