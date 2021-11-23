@@ -22,4 +22,3 @@ pyACA
 scipy
 sklearn
 pydub
-os
