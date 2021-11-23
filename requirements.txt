@@ -13,6 +13,7 @@ google-cloud-storage
 soundfile
 
 # Model
+tensorflow-cpu
 youtube_dl
 librosa
 git+https://github.com/CPJKU/madmom
