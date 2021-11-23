@@ -101,24 +101,6 @@ if st.button('Create my mix!'):
     mix_file = f'{params.MIXED_FOLDER}/{mixed_name}.wav'
     mix_rating_df = mix_tracks_rating_df.drop(columns=["mix"])
     print(mix_rating_df.head())
-    
-    # for i in range(100):
-    #     # Update the progress bar with each iteration.
-    #     # latest_iteration.text(f'Progress: {i+1}%')
-    #     # if i == 0:
-    #     #     latest_iteration.text("Starting engines..")
-    #     # if i == 15:
-    #     #     latest_iteration.text("Downloading youtube link..")
-    #     # if i == 30:
-    #     #     latest_iteration.text("Extracting audio features from user song..")
-    #     # if i == 45:
-    #     #     latest_iteration.text("Matching with other song..")
-    #     # if i == 60:
-    #     #     latest_iteration.text("Creating mix..")
-    #     # if i == 80:
-    #     #     latest_iteration.text("Transforming mix to audio..")
-    #     bar.progress(i + 1)
-    #     time.sleep(random.uniform(0,1))
         
     ## Split and mix
     latest_iteration.text("Transforming mix to audio..")
