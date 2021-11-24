@@ -12,7 +12,6 @@ import shutil
 from tensorflow.python.lib.io import file_io
 import io
 import pandas as pd
-from google.cloud import storage
 
 ## Clean local folders
 def clean_local_folders():
