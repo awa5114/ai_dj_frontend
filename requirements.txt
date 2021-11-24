@@ -15,10 +15,14 @@ soundfile
 # Model
 tensorflow-cpu
 youtube_dl
-#librosa
-git+https://github.com/CPJKU/madmom
+librosa
+madmom
+# git+https://github.com/CPJKU/madmom
 spleeter
 pyACA
 scipy
 sklearn
 pydub
+# libsndfile1
+# libsndfile-dev
+# libasound2-dev 
