@@ -16,8 +16,7 @@ soundfile
 tensorflow-cpu
 youtube_dl
 librosa
-madmom
-# git+https://github.com/CPJKU/madmom
+git+https://github.com/CPJKU/madmom
 spleeter
 pyACA
 scipy

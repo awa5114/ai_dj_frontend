@@ -26,7 +26,9 @@ RUN mkdir -p ~/.streamlit/
 # port = $PORT\n\
 # " > ~/.streamlit/config.toml
 
-
+RUN apt-get update -y && apt-get install -y --no-install-recommends build-essential gcc \
+                                        libsndfile1  
+                                        
 EXPOSE 8501
 ENTRYPOINT ["streamlit", "run"]
 

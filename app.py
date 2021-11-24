@@ -93,25 +93,27 @@ if st.button('Create my mix!'):
     mix_rating_df = mix_tracks_rating_df.drop(columns=["mix"])
     print(mix_rating_df.head())
         
-    ## Split and mix
-    latest_iteration.text("Transforming mix to audio..")
     bar.progress(95)
-    audio_file = open(f'ai_dj/{mix_file}', 'rb')
-    audio_bytes = audio_file.read()
-    bar.progress(100)
-    latest_iteration.text("Done!")
+    latest_iteration.text("Transforming mix to audio..")
+    ## Split and mix
+    @st.cache
+    def get_mix():
+        audio_file = open(f'ai_dj/{mix_file}', 'rb')
+        audio_bytes = audio_file.read()
+        bar.progress(100)
+        latest_iteration.text("Done!")
+        return  audio_bytes
     st.write(f"Your song was mixed with {other_name}:")
-    st.audio(audio_bytes, format='audio/wav')
+    st.audio(get_mix(), format='audio/wav')
     
-else:
-    st.write('Nothing created so far 😞')
+    st.markdown("""### Enjoy the newly created mix by ai_dj!""")
 
-st.write("###")
+    rating = st.slider("Please give a rating to the track!", 1, 10, 5)
 
+    if st.button("Submit my rating"):
+        st.write("Thank you for your feedback, we'll use it to keep improving")
+    
+# else:
+#     st.write('Nothing created so far 😞')
 
-st.markdown("""### Enjoy the newly created mix by ai_dj!""")
-
-rating = st.slider("Please give a rating to the track!", 1, 10, 5)
-
-if st.button("Submit my rating"):
-    st.write("Thank you for your feedback, we'll use it to keep improving")
+# st.write("###")
