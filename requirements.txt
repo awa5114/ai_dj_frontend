@@ -15,7 +15,7 @@ soundfile
 # Model
 tensorflow-cpu
 youtube_dl
-librosa
+#librosa
 git+https://github.com/CPJKU/madmom
 spleeter
 pyACA
