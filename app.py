@@ -9,8 +9,6 @@ import pickle
 from scipy.io.wavfile import write
 
 
-start = 0
-
 _, col2, _ = st.columns([1, 2, 1])
 
 with col2:
@@ -30,9 +28,9 @@ if st.button('Create my mix!'):
     audio_feature_track_names = get_audio_features_db()
     latest_iteration.text("Downloading youtube link..")
     bar.progress(20)
-    if not audio_feature_track_names["youtube_link"].isin([f'{youtube_link}-{start}']).any():
+    if not audio_feature_track_names["youtube_link"].isin([f'{youtube_link}']).any():
         title, output_filename = extract_wav_from_yt_link(youtube_link)
-        title = f'{title}-{start}'
+        title = f'{title}'
         print(title)
         latest_iteration.text("Extracting audio features from user song..")
         bar.progress(35)
@@ -42,7 +40,7 @@ if st.button('Create my mix!'):
              f'gs://ai_dj_batch627_data/data/audio_features/{title}.npy',
              'w'), new_song)
         track_info = {"name": title, 
-                      "youtube_link": f'{youtube_link}-{start}',
+                      "youtube_link": youtube_link,
                       "audio_features_file": f'gs://ai_dj_batch627_data/data/audio_features/{title}.npy'
                       }
         audio_feature_track_names = audio_feature_track_names.append(track_info, ignore_index=True)
@@ -52,7 +50,7 @@ if st.button('Create my mix!'):
              'w'), audio_feature_track_names)
         name = title
     else:
-        name = audio_feature_track_names[audio_feature_track_names["youtube_link"] == f'{youtube_link}-{start}']["name"].values[0]
+        name = audio_feature_track_names[audio_feature_track_names["youtube_link"] == youtube_link]["name"].values[0]
         latest_iteration.text("Extracting audio features from user song..")
         bar.progress(35)
         new_song = get_audio_features(name)
@@ -63,9 +61,9 @@ if st.button('Create my mix!'):
     bar.progress(65)
     while predicted_rating < 5.0:
         if n < 5:
-            # other_name = name
-            # while other_name == name:
-            other_name = audio_feature_track_names.sample(1)["name"].values[0]
+            other_name = name
+            while other_name == name:
+                other_name = audio_feature_track_names.sample(1)["name"].values[0]
             other_song = get_audio_features(other_name)
             # audio_files = [name, other_song]
             mixed_song, mix_tracks_rating_df = mix_tracks(new_song, other_song)
@@ -93,25 +91,28 @@ if st.button('Create my mix!'):
     mix_rating_df = mix_tracks_rating_df.drop(columns=["mix"])
     print(mix_rating_df.head())
         
-    ## Split and mix
-    latest_iteration.text("Transforming mix to audio..")
     bar.progress(95)
-    audio_file = open(f'ai_dj/{mix_file}', 'rb')
-    audio_bytes = audio_file.read()
-    bar.progress(100)
-    latest_iteration.text("Done!")
+    latest_iteration.text("Transforming mix to audio..")
+    ## Split and mix
+    @st.cache
+    def get_mix():
+        audio_file = open(f'ai_dj/{mix_file}', 'rb')
+        audio_bytes = audio_file.read()
+        bar.progress(100)
+        latest_iteration.text("Done!")
+        return  audio_bytes
     st.write(f"Your song was mixed with {other_name}:")
-    st.audio(audio_bytes, format='audio/wav')
+    st.audio(get_mix(), format='audio/wav')
     
-else:
-    st.write('Nothing created so far 😞')
+    st.markdown("""### Enjoy the newly created mix by ai_dj!""")
 
-st.write("###")
-
-
-st.markdown("""### Enjoy the newly created mix by ai_dj!""")
 
 rating = st.slider("Please give a rating to the track!", 1, 10, 5)
 
 if st.button("Submit my rating"):
     st.write("Thank you for your feedback, we'll use it to keep improving")
+    
+# else:
+#     st.write('Nothing created so far 😞')
+
+# st.write("###")
