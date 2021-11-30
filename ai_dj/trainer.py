@@ -33,10 +33,15 @@ def get_audio_features_db():
                 f'gs://ai_dj_batch627_data/data/audio_features/audio_features_track_names.csv',
                 binary_mode=True))
     audio_feature_track_names = np.load(f, allow_pickle=True)
-    # audio_feature_track_names = pd.read_csv("ai_dj/data/audio_features_track_names.csv")
+    # audio_feature_track_names = pd.read_csv("audio_feature_track_names2.csv")
     audio_feature_track_names = pd.DataFrame(audio_feature_track_names)
-    print(audio_feature_track_names)
+    # audio_feature_track_names.to_csv("audio_feature_track_names_new.csv", index=False)
     audio_feature_track_names.columns=["name", "youtube_link", "audio_features_file"]
+    # np.save(
+    #      file_io.FileIO(
+    #          f'gs://ai_dj_batch627_data/data/audio_features/audio_features_track_names.csv',
+    #          'w'), audio_feature_track_names)
+    # print(audio_feature_track_names)
     return audio_feature_track_names
 
 def get_audio_features(name):
